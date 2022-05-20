@@ -28,8 +28,7 @@
     <!-- inbox style -->
     <link href="./leave_report/assets/css/pages/inbox.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme Styles -->
-    <link href="./leave_report/assets/css/theme/light/theme_style.css" rel="stylesheet" id="rt_style_components"
-        type="text/css" />
+    <link href="./leave_report/assets/css/theme/light/theme_style.css" rel="stylesheet" id="rt_style_components" type="text/css" />
     <link href="./leave_report/assets/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="./leave_report/assets/css/theme/light/style.css" rel="stylesheet" type="text/css" />
     <link href="./leave_report/assets/css/responsive.css" rel="stylesheet" type="text/css" />
@@ -39,8 +38,7 @@
 </head>
 <!-- END HEAD -->
 
-<body
-    class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white white-sidebar-color logo-indigo">
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white white-sidebar-color logo-indigo">
     <div class="page-wrapper">
         <!-- start header -->
 
@@ -54,8 +52,7 @@
             <div class="sidebar-container">
                 <div class="sidemenu-container navbar-collapse collapse fixed-menu">
                     <div id="remove-scroll" class="left-sidemenu">
-                        <ul class="sidemenu  page-header-fixed slimscroll-style" data-keep-expanded="false"
-                            data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                        <ul class="sidemenu  page-header-fixed slimscroll-style" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
                             <li class="sidebar-toggler-wrapper hide">
                                 <div class="sidebar-toggler">
                                     <span></span>
@@ -64,10 +61,10 @@
                             <li class="sidebar-user-panel">
                                 <div class="sidebar-user">
                                     <div class="sidebar-user-picture">
-                                        <img alt="image" src="./leave_report/assets/img/dp.jpg">
+                                        <img alt="image" src="https://www.allthetests.com/quiz22/picture_thumb/pic_1171831236_1.png?1592828498">
                                     </div>
                                     <div class="sidebar-user-details">
-                                        <div class="user-name">Sneha Patel</div>
+                                        <div class="user-name">{{ Auth::user()->name }}</div>
                                         <div class="user-role">Administrator</div>
                                     </div>
                                 </div>
@@ -98,24 +95,24 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-								<a href="#" class="nav-link nav-toggle"> <i data-feather="coffee"></i>
-									<span class="title">Leave</span> <span class="arrow"></span>
-								</a>
-								<ul class="sub-menu">
-									<li class="nav-item">
-										<a href="/staffs_on_leave" class="nav-link "> <span class="title">Staffs On Leave</span>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="/leave_request" class="nav-link "> <span class="title">Request Leave</span>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="/add_leave_type" class="nav-link "> <span class="title">Add Leave Type</span>
-										</a>
-									</li>
-								</ul>
-							</li>
+                                <a href="#" class="nav-link nav-toggle"> <i data-feather="coffee"></i>
+                                    <span class="title">Leave</span> <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item">
+                                        <a href="/staffs_on_leave" class="nav-link "> <span class="title">Staffs On Leave</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/leave_request" class="nav-link "> <span class="title">Request Leave</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/add_leave_type" class="nav-link "> <span class="title">Add Leave Type</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="/logout">
                                     <i class="icon-logout"></i> Log Out </a>
