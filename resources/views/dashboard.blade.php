@@ -26,7 +26,7 @@
                             <span class="info-box-icon push-bottom"><i data-feather="users"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Staffs</span>
-                                <span class="info-box-number">450</span>
+                                <span class="info-box-number"> {{ $total_staffs > 0 ? $total_staffs: 0 }} </span>
                                 <div class="progress">
                                     <div class="progress-bar" style="width: 45%"></div>
                                 </div>
@@ -44,7 +44,7 @@
                             <span class="info-box-icon push-bottom"><i data-feather="user"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Staffs On leave</span>
-                                <span class="info-box-number">155</span>
+                                <span class="info-box-number">{{ $staff_on_leave > 0 ? $staff_on_leave: 0 }}</span>
                                 <div class="progress">
                                     <div class="progress-bar" style="width: 40%"></div>
                                 </div>

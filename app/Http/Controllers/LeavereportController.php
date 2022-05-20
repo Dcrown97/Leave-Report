@@ -108,7 +108,9 @@ class LeavereportController extends Controller
 
     public function Dashboard()
     {
-        return view('dashboard');
+        $total_staffs = Staff::count();
+        $staff_on_leave = leave_request::count();
+        return view('dashboard', compact('total_staffs', 'staff_on_leave'));
     }
 
     public function AddStaffs(Request $request)
