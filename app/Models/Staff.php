@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
     protected $table = 'staff';
-    protected $fillable = ['first_name', 'last_name', 'rank', 'unit'];
+    protected $fillable = ['first_name', 'last_name', 'rank', 'unit', 'leave_days'];
 }

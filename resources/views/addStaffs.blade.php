@@ -78,58 +78,15 @@
                                                 class="form-control input-height" />
                                         </div>
                                     </div>
-
-                                    {{-- <div class="form-group row">
-                                        <label class="control-label col-md-3">Commencement Date
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-5">
-                                            <div class="input-append date">
-                                                <div id="dateIcon" class="input-group datePicker">
-                                                    <input class="formDatePicker form-control" type="date"
-                                                        placeholder="Select Date.." data-input>
-                                                    <span class="dateBtn">
-                                                        <a class="input-button" title="toggle" data-toggle>
-                                                            <i class="icon-calendar"></i>
-                                                        </a>
-                                                        <a class="input-button" title="clear" data-clear>
-                                                            <i class="icon-close"></i>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-md-3">Resumption Date
+                                        <label class="control-label col-md-3">Leave Days
                                             <span class="required"> * </span>
                                         </label>
                                         <div class="col-md-5">
-                                            <div class="input-append date">
-                                                <div id="dateIcon" class="input-group datePicker">
-                                                    <input class="formDatePicker form-control" type="date"
-                                                        placeholder="Select Date.." data-input>
-                                                    <span class="dateBtn">
-                                                        <a class="input-button" title="toggle" data-toggle>
-                                                            <i class="icon-calendar"></i>
-                                                        </a>
-                                                        <a class="input-button" title="clear" data-clear>
-                                                            <i class="icon-close"></i>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-md-3">Remarks
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-5">
-                                            <input type="text" name="pswd" data-required="1" placeholder="Enter remarks"
+                                            <input type="number" name="leave_days" data-required="1" placeholder="Enter Leave Days"
                                                 class="form-control input-height" />
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="offset-md-3 col-md-9">

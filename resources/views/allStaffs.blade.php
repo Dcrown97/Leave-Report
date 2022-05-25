@@ -69,6 +69,7 @@
                                                             <th> Name </th>
                                                             <th> Rank </th>
                                                             <th> Unit </th>
+                                                            <th> Leave Days </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
@@ -83,9 +84,10 @@
                                                                     </td>
                                                                     <td class="center">{{ $staff->rank }}</td>
                                                                     <td>{{ $staff->unit }}</td>
+                                                                    <td>{{ $staff->leave_days }}</td>
                                                                     <td>
                                                                         <div class="profile-userbuttons">
-                                                                            <a href="leave_request"
+                                                                            <a href="/leave_request/{{base64_encode($staff->id)}}"
                                                                                 class="btn btn-circle deepPink-bgcolor btn-sm">Request
                                                                                 Leave</a>
                                                                         </div>

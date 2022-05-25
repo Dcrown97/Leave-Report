@@ -57,7 +57,7 @@
                         <div class="info-box bg-b-blue">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h4 class="info-box-title">Staffs Not On Leave</h4>
+                                    <h4 class="info-box-title">About To Resume</h4>
                                 </div>
                                 <div class="col-auto">
                                     <div class="l-bg-green info-icon">
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3 info-box-title">323</h1>
+                            <h1 class="mt-1 mb-3 info-box-title">{{ $leave_types > 0 ? $leave_types : 0 }}</h1>
                         </div>
                     </div>
                 </div>

@@ -25,8 +25,10 @@ Route::match(['get', 'post'], '/signup', [LeavereportController::class, 'SignUp'
 Route::match(['get', 'post'], '/login', [LeavereportController::class, 'Login'])->name('login');
 Route::match(['get', 'post'], '/logout', [LeavereportController::class, 'logout'])->name('logout');
 Route::match(['get', 'post'], '/leave_request', [LeavereportController::class, 'LeaveRequest'])->name('leave_request');
+Route::match(['get', 'post'], '/leave_request/{id}', [LeavereportController::class, 'LeaveRequest']);
 Route::match(['get', 'post'], '/add_leave_type', [LeavereportController::class, 'AddLeaveType'])->name('add_leave_type');
 Route::match(['get', 'post'], '/staffs_on_leave', [LeavereportController::class, 'StaffsOnLeave']);
 Route::match(['get', 'post'], '/get_date', [LeavereportController::class, 'getResumptionDate']);
 Route::match(['get', 'post'], '/leave_days', [LeavereportController::class, 'getLeaveTypeDays']);
+Route::match(['get', 'post'], '/staff_leave', [LeavereportController::class, 'getStaffLeaveDays']);
 
