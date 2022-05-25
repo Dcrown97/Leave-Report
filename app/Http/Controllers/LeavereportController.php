@@ -296,7 +296,18 @@ class LeavereportController extends Controller
     public function StaffsOnLeave()
     {
         $staffs_on_leave = leave_request::with('staff')->with('leave_type')->get();
-        // dd($staffs_on_leave);
+        //group staffs_on_leave based on staff_id and add the num_of_days for each 
+        // $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
+        foreach($staffs_on_leave as $staff_on_leave){
+            // dd($staff_on_leave['num_of_days'] += $staff_on_leave->num_of_days);
+            if($staff_on_leave->staff_id === $staff_on_leave->staff->id){
+                $staff_on_leave['num_of_days'] += $staff_on_leave->num_of_days;
+                $staff_on_leave['name'] = $staff_on_leave->staff->name;
+            }
+            
+        }
+        // dd($staff_on_leave->num_of_days);
+
         return view('staffsOnLeave', compact('staffs_on_leave'));
     }
 
