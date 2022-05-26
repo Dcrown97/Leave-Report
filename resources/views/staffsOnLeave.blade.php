@@ -70,7 +70,7 @@
                                             <td class="left">{{ $staff_on_leave->reumption_date }}</td>
                                             <td class="left">{{ $staff_on_leave->num_of_days }}</td>
                                             <td class="left">
-                                                {{ $staff_on_leave->leave_type->id == 1 || $staff_on_leave->leave_type->id == 2 ? 30 - $staff_on_leave->leave_type->num_of_days : 90 - $staff_on_leave->num_of_days }}
+                                                {{ 30 - $staff_on_leave->num_of_days }}
                                             </td>
                                             <td>
                                                 <a href="#" class="tblEditBtn">

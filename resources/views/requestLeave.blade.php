@@ -49,8 +49,8 @@
                                         </label>
                                         <div class="col-md-5">
                                             <select class="form-select input-height" name="staff_id" id="staff_id">
-                                                @if (is_string($Staff))
-                                                    <option value="{{ $Staff }}">{{ $Staff }}
+                                                @if ($Staff)
+                                                    <option value="{{ $Staff->id }}">{{ $Staff->first_name.' '.$Staff->last_name }}
                                                     </option>
                                                 @else
                                                 <option value="">Select...</option>

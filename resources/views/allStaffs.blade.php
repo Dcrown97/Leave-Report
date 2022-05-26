@@ -84,7 +84,7 @@
                                                                     </td>
                                                                     <td class="center">{{ $staff->rank }}</td>
                                                                     <td>{{ $staff->unit }}</td>
-                                                                    <td>{{ $staff->leave_days }}</td>
+                                                                    <td>{{ 30 - intval($staff->leave_days) }}</td>
                                                                     <td>
                                                                         <div class="profile-userbuttons">
                                                                             <a href="/leave_request/{{base64_encode($staff->id)}}"
