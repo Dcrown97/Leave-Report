@@ -87,7 +87,7 @@
                                                                     <td>{{ $staff->leave_days }}</td>
                                                                     <td>
                                                                         <div class="profile-userbuttons">
-                                                                            <a href="/leave_request/{{base64_encode($staff->id)}}"
+                                                                            <a href="/leave_request/{{ base64_encode($staff->id) }}"
                                                                                 class="btn btn-circle deepPink-bgcolor btn-sm">Request
                                                                                 Leave</a>
                                                                         </div>
@@ -103,14 +103,17 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane" id="tab2">
+
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-body no-padding ">
-                                                <div class="doctor-profile">
-                                                    @if (isset($Staffs) && count($Staffs) > 0)
-                                                        @foreach ($Staffs as $staff)
+                                    @if (isset($Staffs) && count($Staffs) > 0)
+                                        @foreach ($Staffs as $staff)
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body no-padding ">
+                                                        <div class="doctor-profile">
+
                                                             <div class="profile-usertitle">
                                                                 <div class="doctor-name">{{ $staff->first_name }}
                                                                     {{ $staff->last_name }} </div>
@@ -123,14 +126,17 @@
                                                                     class="btn btn-circle deepPink-bgcolor btn-sm">Request
                                                                     Leave</a>
                                                             </div>
-                                                        @endforeach
-                                                    @endif
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    @endif
                                 </div>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
