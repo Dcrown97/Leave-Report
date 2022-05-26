@@ -31,4 +31,5 @@ Route::match(['get', 'post'], '/staffs_on_leave', [LeavereportController::class,
 Route::match(['get', 'post'], '/get_date', [LeavereportController::class, 'getResumptionDate']);
 Route::match(['get', 'post'], '/leave_days', [LeavereportController::class, 'getLeaveTypeDays']);
 Route::match(['get', 'post'], '/staff_leave', [LeavereportController::class, 'getStaffLeaveDays']);
+Route::match(['get', 'post'], '/staffs_about_to_resume', [LeavereportController::class, 'StaffsAboutToResume']);
 

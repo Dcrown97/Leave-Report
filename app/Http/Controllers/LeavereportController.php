@@ -116,7 +116,7 @@ class LeavereportController extends Controller
 
         //get staff that about to resume their leave in 5 days
         $staff_resume_leave = leave_request::where('reumption_date', '<=', date('Y-m-d', strtotime('+5 days')))->where('reumption_date', '>', date('Y-m-d'))->get();
-        // dd($staff_resume_leave);
+        // dd($staff_resume_leave); 
         return view('dashboard', compact('total_staffs', 'staff_on_leave', 'leave_types', 'staff_resume_leave'));
     }
 
@@ -218,8 +218,8 @@ class LeavereportController extends Controller
                         }
 
                         //check if record exits and update else create new record
-                       
-                        if ( $leave_request = leave_request::where('staff_id', $request->staff_id)->first()) {
+
+                        if ($leave_request = leave_request::where('staff_id', $request->staff_id)->first()) {
                             try {
                                 Staff::find($request->staff_id)->update([
                                     'leave_days' => $request->num_of_days + $leave_request->num_of_days,
@@ -228,13 +228,13 @@ class LeavereportController extends Controller
                                 return back()->with('error', 'Staff not found');
                             }
                             // dd($leave_request);
-                           $saved = $leave_request->update([
+                            $saved = $leave_request->update([
                                 'num_of_days' => $request->num_of_days + $leave_request->num_of_days,
                                 'commencement_date' => $request->commencement_date,
                                 'reumption_date' => $request->resumption_date,
                                 'remarks' => $request->remarks,
                             ]);
-                          
+
                             if ($saved) {
                                 return redirect('/leave_request')->with('success', 'Leave Requested Successfully');
                             } else {
@@ -262,7 +262,6 @@ class LeavereportController extends Controller
                                 return redirect('/leave_request')->with('error', 'Leave Request Creation Failed');
                             }
                         }
-                       
                     } else {
                         //get the remaining days
                         $remaining_days = 30 - $total_days;
@@ -334,7 +333,7 @@ class LeavereportController extends Controller
                 }
             }
         }
-        
+
         return view('addLeaveType');
     }
 
@@ -388,5 +387,13 @@ class LeavereportController extends Controller
         } else {
             echo json_encode('No staff selected');
         }
+    }
+
+    public function StaffsAboutToResume()
+    {
+        // $staffs_about_to_resume = leave_request::with('staff')->with('leave_type')->get();
+        $staffs_about_to_resume = leave_request::with('staff')->where('reumption_date', '<=', date('Y-m-d', strtotime('+5 days')))->where('reumption_date', '>', date('Y-m-d'))->get();
+        // dd($staffs_about_to_resume);
+        return view('staffsAboutToResume', compact('staffs_about_to_resume'));
     }
 }
