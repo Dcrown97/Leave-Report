@@ -113,7 +113,6 @@ class LeavereportController extends Controller
         $total_staffs = Staff::count();
         $staff_on_leave = leave_request::count();
         $leave_types = leave_type::count();
-        $staffs_about_to_resume = leave_request::where('reumption_date', 'pending')->count();
         return view('dashboard', compact('total_staffs', 'staff_on_leave', 'leave_types'));
     }
 
