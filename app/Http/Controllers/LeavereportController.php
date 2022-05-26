@@ -163,12 +163,14 @@ class LeavereportController extends Controller
     public function AllStaffs(Request $request)
     {
         $Staffs = Staff::all();
-        $staffs_on_leave = leave_request::all();
-        // dd($staffs_on_leave);
-        $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
-        // dd($staffs_on_leave);
-        $staffs_on_leave = leave_request::where('staff_id', 1)->pluck('num_of_days')->sum();
-        // dd($staffs_on_leave);
+        // $leave_days_taken = leave_request::all();
+        // dd($leave_days_taken);
+        $leave_days_taken = leave_request::with('staff')->with('leave_type')->get();
+        // dd($leave_days_taken);
+        $leave_days_taken = $leave_days_taken->groupBy('staff_id');
+        // dd($leave_days_taken);
+        $leave_days_taken = leave_request::where('staff_id', 1)->pluck('num_of_days')->sum();
+        // dd($leave_days_taken);
         return view('allStaffs', compact('Staffs'));
     }
 
