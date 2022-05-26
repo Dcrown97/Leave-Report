@@ -163,14 +163,12 @@ class LeavereportController extends Controller
     public function AllStaffs(Request $request)
     {
         $Staffs = Staff::all();
-        // $leave_days_taken = leave_request::all();
-        // dd($leave_days_taken);
-        $leave_days_taken = leave_request::with('staff')->with('leave_type')->get();
-        // dd($leave_days_taken);
-        $leave_days_taken = $leave_days_taken->groupBy('staff_id');
-        // dd($leave_days_taken);
-        $leave_days_taken = leave_request::where('staff_id', 1)->pluck('num_of_days')->sum();
-        // dd($leave_days_taken);
+        $staffs_on_leave = leave_request::with('staff')->get();
+        // dd($staffs_on_leave);
+        $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
+        // dd($staffs_on_leave);
+        //$staffs_on_leave = leave_request::where('staff_id', 1)->pluck('num_of_days')->sum();
+        // dd($staffs_on_leave);
         return view('allStaffs', compact('Staffs'));
     }
 
@@ -181,10 +179,10 @@ class LeavereportController extends Controller
         $Staff = null;
         if ($id) {
             $Staff = Staff::find(base64_decode($id));
-            $Staff = $Staff->first_name . ' ' . $Staff->last_name;
+            // dd($Staff);
+            // $Staff = $Staff->first_name . ' ' . $Staff->last_name;
         }
         $Staffs = Staff::all();
-        // dd($Staffs);
         if ($request->isMethod('post')) {
             $request->validate([
                 'staff_id' => 'required',
@@ -214,19 +212,52 @@ class LeavereportController extends Controller
                         if ($request->leave_type_id == 2 && $request->num_of_days > 30) {
                             return back()->with('error', 'You have only 30days of annual leave');
                         }
-                        $leave_request = new leave_request();
-                        $leave_request->staff_id = $request->staff_id;
-                        $leave_request->leave_type_id = $request->leave_type_id;
-                        $leave_request->commencement_date = $request->commencement_date;
-                        $leave_request->reumption_date = $request->resumption_date;
-                        $leave_request->num_of_days = $request->num_of_days;
-                        $leave_request->remarks = $request->remarks;
-                        $saved = $leave_request->save();
-                        if ($saved) {
-                            return redirect('/staffs_on_leave')->with('success', 'Leave Request Successfully');
+
+                        //check if record exits and update else create new record
+                       
+                        if ( $leave_request = leave_request::where('staff_id', $request->staff_id)->where('staff_id', $request->staff_id)->first()) {
+                            // dd($leave_request);
+                           $saved = $leave_request->update([
+                                'num_of_days' => $request->num_of_days + $leave_request->num_of_days,
+                                'commencement_date' => $request->commencement_date,
+                                'reumption_date' => $request->resumption_date,
+                                'remarks' => $request->remarks,
+                            ]);
+                           try{
+                                Staff::find($request->staff_id)->update([
+                                    'leave_days' => $request->num_of_days + $leave_request->num_of_days,
+                                ]);
+                           }catch(\Exception $e){
+                               return back()->with('error', 'Staff not found');
+                            }
+                            if ($saved) {
+                                return redirect('/leave_request')->with('success', 'Leave Requested Successfully');
+                            } else {
+                                return redirect('/leave_request')->with('error', 'Leave Update Failed');
+                            }
                         } else {
-                            return redirect('/leave_request')->with('error', 'Leave Request Failed');
+                            $leave_request = new leave_request();
+                            $leave_request->staff_id = $request->staff_id;
+                            $leave_request->leave_type_id = $request->leave_type_id;
+                            $leave_request->num_of_days = $request->num_of_days;
+                            $leave_request->commencement_date = $request->commencement_date;
+                            $leave_request->reumption_date = $request->resumption_date;
+                            $leave_request->remarks = $request->remarks;
+                            $saved = $leave_request->save();
+                            try {
+                                Staff::find($request->staff_id)->update([
+                                    'leave_days' => $request->num_of_days + $leave_request->num_of_days,
+                                ]);
+                            } catch (\Exception $e) {
+                                return back()->with('error', 'Staff not found');
+                            }
+                            if ($saved) {
+                                return redirect('/leave_request')->with('success', 'Leave Request Created Successfully');
+                            } else {
+                                return redirect('/leave_request')->with('error', 'Leave Request Creation Failed');
+                            }
                         }
+                       
                     } else {
                         //get the remaining days
                         $remaining_days = 30 - $total_days;
@@ -245,6 +276,13 @@ class LeavereportController extends Controller
                     $leave_request->num_of_days = $request->num_of_days;
                     $leave_request->remarks = $request->remarks;
                     $saved = $leave_request->save();
+                    try {
+                        Staff::find($request->staff_id)->update([
+                            'leave_days' => $request->num_of_days + $leave_request->num_of_days,
+                        ]);
+                    } catch (\Exception $e) {
+                        return back()->with('error', 'Staff not found');
+                    }
                     if ($saved) {
                         return back()->with('success', 'Leave Requested Successfully');
                     } else {
@@ -291,14 +329,24 @@ class LeavereportController extends Controller
                 }
             }
         }
-
+        
         return view('addLeaveType');
     }
 
     public function StaffsOnLeave()
     {
         $staffs_on_leave = leave_request::with('staff')->with('leave_type')->get();
-        // dd($staffs_on_leave);
+        //group staffs_on_leave based on staff_id and add the num_of_days for each 
+        // $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
+        // foreach($staffs_on_leave as $staff_on_leave){
+        // dd($staff_on_leave['num_of_days'] += $staff_on_leave->num_of_days);
+        // if($staff_on_leave->staff_id === $staff_on_leave->staff->id){
+        //     $staff_on_leave['num_of_days'] += $staff_on_leave->num_of_days;
+        //     $staff_on_leave['name'] = $staff_on_leave->staff->name;
+        // }
+
+        // }
+
         return view('staffsOnLeave', compact('staffs_on_leave'));
     }
 
