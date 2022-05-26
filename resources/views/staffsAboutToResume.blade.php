@@ -5,7 +5,7 @@
             <div class="page-bar">
                 <div class="page-title-breadcrumb">
                     <div class=" pull-left">
-                        <div class="page-title">All Staffs</div>
+                        <div class="page-title">Staffs About To Resume</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right">
                         <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="/">Home</a>&nbsp;<i
@@ -13,7 +13,7 @@
                         </li>
                         {{-- <li><a class="parent-item" href="#">Other Staff</a>&nbsp;<i class="fa fa-angle-right"></i> --}}
                         </li>
-                        <li class="active">All Staff</li>
+                        <li class="active">Staffs About To Resume</li>
                     </ol>
                 </div>
             </div>
@@ -43,14 +43,6 @@
                                             <div class="card-body ">
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6 col-6">
-                                                        <div class="btn-group">
-                                                            <a href="/add_staffs" id="addRow" class="btn btn-primary">
-                                                                Add New Staff <i class="fa fa-plus"></i>
-                                                            </a>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6 col-6">
                                                         <div id="example4_filter" class="dataTables_filter">
                                                             <label>
                                                                 <input type="search" style="margin-bottom: 10px"
@@ -67,31 +59,21 @@
                                                         <tr>
                                                             <th>S/N</th>
                                                             <th> Name </th>
-                                                            <th> Rank </th>
-                                                            <th> Unit </th>
-                                                            <th> Leave Days </th>
-                                                            <th> Action </th>
+                                                            <th> Reumption Date </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @if (isset($Staffs) && count($Staffs) > 0)
-                                                            @foreach ($Staffs as $staff)
+                                                        @if (isset($staffs_about_to_resume) && count($staffs_about_to_resume) > 0)
+                                                            @foreach ($staffs_about_to_resume as $resume)
                                                                 <tr class="odd gradeX">
                                                                     <td class="patient-img">
                                                                         {{ $loop->iteration }}
                                                                     </td>
-                                                                    <td>{{ $staff->first_name }} {{ $staff->last_name }}
-                                                                    </td>
-                                                                    <td class="center">{{ $staff->rank }}</td>
-                                                                    <td>{{ $staff->unit }}</td>
-                                                                    <td>{{ 30 - intval($staff->leave_days) == 0 ? 30 : 30 - intval($staff->leave_days) }}
-                                                                    </td>
                                                                     <td>
-                                                                        <div class="profile-userbuttons">
-                                                                            <a href="/leave_request/{{ base64_encode($staff->id) }}"
-                                                                                class="btn btn-circle deepPink-bgcolor btn-sm">Request
-                                                                                Leave</a>
-                                                                        </div>
+                                                                        {{ $resume->staff->first_name . ' ' . $resume->staff->last_name }}
+                                                                    </td>
+                                                                    <td class="center">
+                                                                        {{ $resume->reumption_date }}
                                                                     </td>
                                                                 </tr>
                                                                 </tr>
@@ -106,28 +88,20 @@
                             </div>
 
                             <div class="tab-pane" id="tab2">
-
                                 <div class="row">
-                                    @if (isset($Staffs) && count($Staffs) > 0)
-                                        @foreach ($Staffs as $staff)
+                                    @if (isset($staffs_about_to_resume) && count($staffs_about_to_resume) > 0)
+                                        @foreach ($staffs_about_to_resume as $resume)
                                             <div class="col-md-4">
                                                 <div class="card">
                                                     <div class="card-body no-padding ">
                                                         <div class="doctor-profile">
                                                             <div class="profile-usertitle">
-                                                                <div class="doctor-name">{{ $staff->first_name }}
-                                                                    {{ $staff->last_name }} </div>
-                                                                <div class="name-center"><b>Rank:</b>
-                                                                    {{ $staff->rank }} </div>
-                                                            </div>
-                                                            <p><b>Unit:</b> {{ $staff->unit }}</p>
-                                                            <p><b>Leave Days:</b>
-                                                                {{ 30 - intval($staff->leave_days) == 0 ? 30 : 30 - intval($staff->leave_days) }}
-                                                            </p>
-                                                            <div class="profile-userbuttons">
-                                                                <a href="/leave_request/{{ base64_encode($staff->id) }}"
-                                                                    class="btn btn-circle deepPink-bgcolor btn-sm">Request
-                                                                    Leave</a>
+                                                                <div class="doctor-name">
+                                                                    {{ $resume->staff->first_name . ' ' . $resume->staff->last_name }}
+                                                                </div>
+                                                                <div class="name-center"><b>Resumtion Date:</b>
+                                                                    {{ $resume->reumption_date }}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

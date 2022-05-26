@@ -56,7 +56,6 @@
                                         <th> End Date </th>
                                         <th> Days taken </th>
                                         <th> Days Left </th>
-                                        <th> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,14 +70,6 @@
                                             <td class="left">{{ $staff_on_leave->num_of_days }}</td>
                                             <td class="left">
                                                 {{ 30 - $staff_on_leave->num_of_days }}
-                                            </td>
-                                            <td>
-                                                <a href="#" class="tblEditBtn">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a href="#" class="tblDelBtn">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
                                             </td>
                                         </tr>
                                     @empty
