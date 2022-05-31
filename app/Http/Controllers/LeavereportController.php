@@ -391,7 +391,6 @@ class LeavereportController extends Controller
 
     public function StaffsAboutToResume()
     {
-        // $staffs_about_to_resume = leave_request::with('staff')->with('leave_type')->get();
         $staffs_about_to_resume = leave_request::with('staff')->where('reumption_date', '<=', date('Y-m-d', strtotime('+5 days')))->where('reumption_date', '>', date('Y-m-d'))->get();
         // dd($staffs_about_to_resume);
         return view('staffsAboutToResume', compact('staffs_about_to_resume'));
