@@ -181,7 +181,7 @@
                                         </td>
                                         <td>
                                             <div class="profile-userbuttons">
-                                                <a href="/leave_request/${value.id}" class="btn btn-circle deepPink-bgcolor btn-sm">Request
+                                                <a href="/leave_request/${btoa(value.id)}" class="btn btn-circle deepPink-bgcolor btn-sm">Request
                                                     Leave</a>
                                             </div>
                                             </td>
