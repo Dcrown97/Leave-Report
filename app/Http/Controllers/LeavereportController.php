@@ -21,7 +21,6 @@ class LeavereportController extends Controller
         ]);
     }
 
-
     public function SignUp(Request $request)
     {
         //redirect to dashboard if user is already logged in
