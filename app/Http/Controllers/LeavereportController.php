@@ -389,6 +389,17 @@ class LeavereportController extends Controller
         }
     }
 
+
+    public function searchStaffs(Request $request)
+    {
+        // if ($request->isMethod('post')) {
+            $search = $request->search;
+            $staffs = Staff::where('first_name', 'like', '%' . $search . '%')->orWhere('last_name', 'like', '%' . $search . '%')->get();
+            
+            echo json_encode($staffs);
+        // }
+    }
+
     public function StaffsAboutToResume()
     {
         // $staffs_about_to_resume = leave_request::with('staff')->with('leave_type')->get();
