@@ -21,7 +21,6 @@ class LeavereportController extends Controller
         ]);
     }
 
-
     public function SignUp(Request $request)
     {
         //redirect to dashboard if user is already logged in
@@ -167,6 +166,7 @@ class LeavereportController extends Controller
     public function AllStaffs(Request $request)
     {
         $Staffs = Staff::all();
+        // dd($Staffs);
         $staffs_on_leave = leave_request::with('staff')->get();
         // dd($staffs_on_leave);
         $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
@@ -393,16 +393,33 @@ class LeavereportController extends Controller
     public function searchStaffs(Request $request)
     {
         // if ($request->isMethod('post')) {
-            $search = $request->search;
-            $staffs = Staff::where('first_name', 'like', '%' . $search . '%')->orWhere('last_name', 'like', '%' . $search . '%')->get();
-            
-            echo json_encode($staffs);
+        $search = $request->search;
+        $staffs = Staff::where('first_name', 'like', '%' . $search . '%')->orWhere('last_name', 'like', '%' . $search . '%')->get();
+
+        echo json_encode($staffs);
+        // }
+    }
+
+    public function searchStaffsOnLeave(Request $request)
+    {
+        // if ($request->isMethod('post')) {
+        $search = $request->search;
+        $staffs = leave_request::with('staff')->get();
+        $result = [];
+        foreach ($staffs as $staff) {
+            if (strtolower($staff->staff->first_name) == strtolower($search) || strtolower($staff->staff->last_name) == strtolower($search)) {
+                // dd($staff);
+                $result[] = $staff;
+                echo json_encode($result);
+            }
+        }
+
+        // echo json_encode($staffs);
         // }
     }
 
     public function StaffsAboutToResume()
     {
-        // $staffs_about_to_resume = leave_request::with('staff')->with('leave_type')->get();
         $staffs_about_to_resume = leave_request::with('staff')->where('reumption_date', '<=', date('Y-m-d', strtotime('+5 days')))->where('reumption_date', '>', date('Y-m-d'))->get();
         // dd($staffs_about_to_resume);
         return view('staffsAboutToResume', compact('staffs_about_to_resume'));
