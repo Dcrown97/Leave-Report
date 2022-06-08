@@ -35,3 +35,5 @@ Route::match(['get', 'post'], '/staffs_about_to_resume', [LeavereportController:
 
 Route::get('search_staffs', [LeavereportController::class, 'searchStaffs'])->name('search_staffs');
 
+Route::get('search_staffs_on_leave', [LeavereportController::class, 'searchStaffsOnLeave'])->name('search_staffs_on_leave');
+

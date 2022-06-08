@@ -41,7 +41,7 @@
                             <div id="example4_filter" class="dataTables_filter" style="margin-bottom: 10px">
 
                                 <input type="search" class="form-control form-control-sm" placeholder="Search"
-                                    aria-controls="example4">
+                                    aria-controls="example4" id="search">
 
                             </div>
                             <table
@@ -59,8 +59,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr id="result"></tr>
                                     @forelse($staffs_on_leave as $staff_on_leave)
-                                        <tr class="odd gradeX">
+                                        <tr class="odd gradeX" id="old">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $staff_on_leave->staff->first_name . ' ' . $staff_on_leave->staff->last_name }}
                                             </td>
@@ -87,3 +88,83 @@
         </div>
     </div>
 @endsection
+
+
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+
+<script>
+    var searchRquest = [];
+    var minLength = 3;
+    $(function() {
+        console.log('first')
+        $("#search").keyup(function() {
+            console.log('search');
+            let value = $(this).val();
+            console.log('value', value);
+            if (value.length >= minLength) {
+                if (searchRquest != null) {
+                    // searchRquest.abort();
+
+                    searchRquest = $.ajax({
+                        url: "/search_staffs_on_leave",
+                        type: "GET",
+                        data: {
+                            search: value
+                        },
+                        success: function(data) {
+                            console.log('data success', data);
+                            var response = JSON.parse(data);
+                            console.log('response', response);
+                            
+                            var html = '';
+                            if (response.length > 0) {
+                                $.each(response, function(key, value) {
+                                    console.log('value', value);
+                                    html += `
+                                <tr class="odd gradeX">
+                                    <td class="patient-img">
+                                        ${key + 1}  </td>
+                                        <td>${value.first_name} ${value.last_name}
+                                        </td>
+                                        <td class="center">${value.leave_type}</td>
+                                        <td>${value.commencement_date}</td>
+                                        <td>${value.reumption_date}</td>
+                                        <td>${value.num_of_days}</td>
+                                        <td>${30 - $value.num_of_days}</td>
+                                        </td>
+                                        <td>
+                                            <div class="profile-userbuttons">
+                                                <a href="/leave_request/${btoa(value.id)}" class="btn btn-circle deepPink-bgcolor btn-sm">Request
+                                                    Leave</a>
+                                            </div>
+                                            </td>
+                                            </tr>
+                                            `;
+                                    $('#old').hide();
+                                    $('#result').empty().append(html);
+                                });
+                            } else {
+                                $('#result').empty();
+                                $('#old').hide();
+                                $('#result').append(`
+                                <div>
+                                   
+                                        <h3>No Result Found</h3>
+                                   
+                                 </div>
+                                    `);
+                            }
+
+                        },
+                        error: function(data) {
+                            console.log('data error', data);
+                        }
+                    });
+                }
+            } else {
+                $('#result').empty();
+                $('#old').show();
+            }
+        });
+    });
+</script>
