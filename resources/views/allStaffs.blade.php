@@ -96,11 +96,12 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-                                                                </tr>
                                                             @endforeach
-                                                        @endif
-                                                    </tbody>
-                                                </table>
+
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                    {{ $Staffs->links('vendor.pagination.bootstrap-4') }}
                                             </div>
                                         </div>
                                     </div>
