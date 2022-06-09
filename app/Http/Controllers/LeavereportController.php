@@ -165,7 +165,7 @@ class LeavereportController extends Controller
 
     public function AllStaffs(Request $request)
     {
-        $Staffs = Staff::all();
+        $Staffs = Staff::paginate(10);
         // dd($Staffs);
         $staffs_on_leave = leave_request::with('staff')->get();
         // dd($staffs_on_leave);
@@ -339,7 +339,7 @@ class LeavereportController extends Controller
 
     public function StaffsOnLeave()
     {
-        $staffs_on_leave = leave_request::with('staff')->with('leave_type')->get();
+        $staffs_on_leave = leave_request::with('staff')->with('leave_type')->paginate(10);
         //group staffs_on_leave based on staff_id and add the num_of_days for each 
         // $staffs_on_leave = $staffs_on_leave->groupBy('staff_id');
         // foreach($staffs_on_leave as $staff_on_leave){

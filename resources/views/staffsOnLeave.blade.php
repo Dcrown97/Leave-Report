@@ -81,6 +81,7 @@
 
                                 </tbody>
                             </table>
+                            {{ $staffs_on_leave->links('vendor.pagination.bootstrap-4') }}
                         </div>
                     </div>
                 </div>
