@@ -24,14 +24,7 @@
                         <button id="panel-button" class="mdl-button mdl-js-button mdl-button--icon pull-right" data-upgraded=",MaterialButton">
                             <i class="material-icons">more_vert</i>
                         </button>
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" data-mdl-for="panel-button">
-                            <li class="mdl-menu__item"><i class="material-icons">assistant_photo</i>Action
-                            </li>
-                            <li class="mdl-menu__item"><i class="material-icons">print</i>Another action
-                            </li>
-                            <li class="mdl-menu__item"><i class="material-icons">favorite</i>Something else
-                                here</li>
-                        </ul>
+                       
                     </div>
                     <div class="card-body" id="bar-parent">
                         @include('flash.flash')
@@ -84,7 +77,7 @@
                                     </label>
                                     <div class="col-md-5">
                                         <p id="error1" class="text-danger "></p>
-                                        <input type="number" name="num_of_days" data-required="1" placeholder="Enter Number of days" class="form-control input-height" id="days" min="0" value="{{ $Staff !== null? 30 - $Staff->leave_days: '' }}" />
+                                        <input type="number" name="num_of_days" data-required="1" placeholder="Enter Number of days" class="form-control input-height" id="days" min="0" value="{{ ($Staff !== null? ($Staff->leave_days === "30(exhausted)"? 0: $Staff->leave_days == 30)? 30 : 30 - $Staff->leave_days: '') }}" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -284,7 +277,8 @@
                     console.log('response', response);
                     // $('#sub_category').empty();
                     $('#error1').text('');
-                    $('#days').val(30 - response)
+                    response == '30(exhausted)' ?  $('#error1').text(response) : $('#error1').text('');
+                    $('#days').val(response == 30 ? 30 : 30 - response);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Oops!", "An error occurred.");

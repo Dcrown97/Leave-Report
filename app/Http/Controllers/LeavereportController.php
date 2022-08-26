@@ -116,6 +116,14 @@ class LeavereportController extends Controller
 
         //get staff that about to resume their leave in 5 days
         $staff_resume_leave = leave_request::where('reumption_date', '<=', date('Y-m-d', strtotime('+5 days')))->where('reumption_date', '>', date('Y-m-d'))->get();
+        // get staff that resumption date less than current date and soft deleted
+        $staff_resume_leave_today = leave_request::where('reumption_date', '<', date('Y-m-d'))->get();
+        if ($staff_resume_leave_today) {
+            foreach ($staff_resume_leave_today as $staff_resume_leave_today) {
+                $staff_resume_leave_today->delete();
+            }
+        }
+        // dd($staff_resume_leave_today);
         // dd($staff_resume_leave); 
         return view('dashboard', compact('total_staffs', 'staff_on_leave', 'leave_types', 'staff_resume_leave'));
     }
@@ -169,8 +177,9 @@ class LeavereportController extends Controller
         $Staff = null;
         if ($request->id) {
             $Staff = Staff::find(base64_decode($request->id));
-            // dd($Staff);
-            // $Staff = $Staff->first_name . ' ' . $Staff->last_name;
+            if($Staff->leave_days == "30(exhausted)" ) {
+            return back()->with('error', 'Sorry, leave days exhausted');
+            }
         }
         $Staffs = Staff::all();
         if ($request->isMethod('post')) {
@@ -182,7 +191,7 @@ class LeavereportController extends Controller
                 'num_of_days' => 'required',
                 'remarks' => 'required',
             ]);
-            $remaining_days = leave_request::where('staff_id', $request->staff_id)->get();
+            $remaining_days = leave_request::where('staff_id', $request->staff_id)->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->withTrashed()->get();
             $total_days = 0;
             foreach ($remaining_days as $remaining_day) {
                 $total_days += $remaining_day->num_of_days;
@@ -207,7 +216,7 @@ class LeavereportController extends Controller
                         if ($leave_request = leave_request::where('staff_id', $request->staff_id)->first()) {
                             try {
                                 Staff::find($request->staff_id)->update([
-                                    'leave_days' => $request->num_of_days + $leave_request->num_of_days,
+                                    'leave_days' => $request->num_of_days + $leave_request->num_of_days == 30 ? $request->num_of_days + $leave_request->num_of_days.'(exhausted)' : $request->num_of_days + $leave_request->num_of_days,
                                 ]);
                             } catch (\Exception $e) {
                                 return back()->with('error', 'Staff not found');
@@ -236,7 +245,7 @@ class LeavereportController extends Controller
                             $saved = $leave_request->save();
                             try {
                                 Staff::find($request->staff_id)->update([
-                                    'leave_days' => $leave_request->num_of_days,
+                                    'leave_days' => $leave_request->num_of_days == 30 ? $leave_request->num_of_days.'(exhausted)' : $leave_request->num_of_days ,
                                 ]);
                             } catch (\Exception $e) {
                                 return back()->with('error', 'Staff not found');
@@ -325,7 +334,8 @@ class LeavereportController extends Controller
     public function StaffsOnLeave()
     {
         $staffs_on_leave = leave_request::with('staff')->with('leave_type')->where('reumption_date', '>', Carbon::today())->paginate(10);
-        $leave_previous_records = leave_request::with('staff')->with('leave_type')->where('reumption_date', '<', Carbon::today())->paginate(10);
+        $leave_previous_records = leave_request::with('staff')->with('leave_type')->onlyTrashed()->paginate(10);
+        // dd($leave_previous_records);
 
         // $user->notify(new LeaveNotification($message, $user));
       

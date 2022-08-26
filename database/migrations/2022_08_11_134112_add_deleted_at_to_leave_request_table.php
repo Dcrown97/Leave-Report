@@ -14,7 +14,7 @@ class AddDeletedAtToLeaveRequestTable extends Migration
     public function up()
     {
         Schema::table('leave_requests', function (Blueprint $table) {
-            //
+            $table->softDeletes();
         });
     }
 
@@ -26,7 +26,7 @@ class AddDeletedAtToLeaveRequestTable extends Migration
     public function down()
     {
         Schema::table('leave_requests', function (Blueprint $table) {
-            //
+            
         });
     }
 }

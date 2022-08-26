@@ -41,7 +41,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-body ">
-                                                 @include('flash.flash')
+                                                @include('flash.flash')
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6 col-6">
                                                         <div class="btn-group">
@@ -71,12 +71,13 @@
                                                             <th> Name </th>
                                                             <th> Rank </th>
                                                             <th> Unit </th>
-                                                            {{-- <th> Leave Days </th> --}}
+                                                            <th> Days taken </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="result"></tbody>
                                                     <tbody id="old">
+                                                        {{-- @dd(@$Staffs) --}}
                                                         @if (isset($Staffs) && count($Staffs) > 0)
                                                             @foreach ($Staffs as $staff)
                                                                 <tr class="odd gradeX">
@@ -87,25 +88,26 @@
                                                                     </td>
                                                                     <td class="center">{{ $staff->rank }}</td>
                                                                     <td>{{ $staff->unit }}</td>
-                                                                    {{-- <td>{{ $staff->leave_days == 30 ? 30 : 30 - intval($staff->leave_days) }} --}}
+                                                                    <td>{{ $staff->leave_days == 30 ? 0 : $staff->leave_days }}
+                                                                    </td>
                                                                     </td>
                                                                     <td>
                                                                         <div class="profile-userbuttons">
                                                                             <a href="/leave_request?id={{ base64_encode($staff->id) }}"
                                                                                 class="btn btn-circle btn-sm">Request
                                                                                 Leave</a>
-                                                                                <a onclick="return confirm('Are you sure ?')"
+                                                                            <a onclick="return confirm('Are you sure ?')"
                                                                                 href="/delete/{{ base64_encode($staff->id) }}"
-                                                                                class="btn btn-circle deepPink-bgcolor btn-sm">Delete Staff</a>
+                                                                                class="btn btn-circle deepPink-bgcolor btn-sm">Delete
+                                                                                Staff</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
-
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                    {{ $Staffs->links('vendor.pagination.bootstrap-4') }}
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                                {{ $Staffs->links('vendor.pagination.bootstrap-4') }}
                                             </div>
                                         </div>
                                     </div>
@@ -190,9 +192,9 @@
                                         <td>${value.first_name} ${value.last_name}
                                         </td>
                                         <td class="center">${value.rank}</td>
-                                        <td>${value.unit}</td>
-                                        <td>${30 - parseInt(value.leave_days) == 0 ? 30 : 30 - parseInt(value.leave_days)}
-                                        </td>
+                                    <td>${value.unit}</td>
+									 <td>${value.leave_days == 30? 0:  value.leave_days} </td>                        
+                                    <td>
                                         <td>
                                             <div class="profile-userbuttons">
                                                 <a href="/leave_request/${btoa(value.id)}" class="btn btn-circle deepPink-bgcolor btn-sm">Request

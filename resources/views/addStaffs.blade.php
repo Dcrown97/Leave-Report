@@ -84,8 +84,7 @@
                                             <div class="offset-md-3 col-md-9">
                                                 <button type="submit"
                                                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-circle btn-primary">Submit</button>
-                                                <button type="button"
-                                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-circle btn-danger">Cancel</button>
+                                                <a href="{{ url()->previous() }}" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-circle btn-danger">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
