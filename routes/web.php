@@ -38,6 +38,9 @@ Route::match(['get', 'post'], '/staffs_about_to_resume', [LeavereportController:
 Route::get('/search_staffs', [LeavereportController::class, 'searchStaffs'])->name('search_staffs');
 
 Route::get('/search_staffs_on_leave', [LeavereportController::class, 'searchStaffsOnLeave'])->name('search_staffs_on_leave');
+Route::post('/edit_leave_type/{id}', [LeavereportController::class, 'edit_leave_type'])->name('edit_leave_type');
+Route::match(['post', 'get'], '/delete_leave_type/{id}', [LeavereportController::class, 'delete_leave_type'])->name('delete_leave_type');
+
 
 Route::match(['get', 'post'], '/delete/{id}', [LeavereportController::class, 'delete_staff'])->name('delete');
 

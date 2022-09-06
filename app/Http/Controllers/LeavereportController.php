@@ -298,20 +298,12 @@ class LeavereportController extends Controller
 
     public function AddLeaveType(Request $request)
     {
-
-        //add leave type
+        $leave_types =  leave_type::paginate(10);
+        
+        //leave type registration
         if ($request->isMethod('post')) {
             // dd($ request->all());
-            $request->validate([
-                'leave_type' => 'required',
-                'num_of_days' => 'required',
-            ]);
-
             $leave_type = new leave_type();
-
-            //leave type registration
-            if ($request->isMethod('post')) {
-                // dd($ request->all());
                 $request->validate([
                     'leave_type' => 'required',
                     'num_of_days' => 'required',
@@ -326,9 +318,37 @@ class LeavereportController extends Controller
                     return redirect('/add_leave_type')->with('error', 'Leave Type Adding Failed');
                 }
             }
-        }
 
-        return view('addLeaveType');
+        return view('addLeaveType', ['leave_types' => $leave_types]);
+    }
+
+    public function edit_leave_type(Request $request, $id)
+    {
+
+        if ($request->isMethod('post')) {
+            $edit = leave_type::find(base64_decode($id));
+            if ($edit) {
+                // dd($edit);
+                $edit->leave_type = $request->name;
+                $edit->num_of_days = $request->days;
+                $edit->save();
+                return back()->with('success', 'Updated Successfully');
+            } else {
+                return back()->with('error', 'Something went wrong');
+            }
+        }
+    }
+
+    public function delete_leave_type(Request $request, $id)
+    {
+        $delete = leave_type::find(base64_decode($id));
+        if ($delete) {
+            // dd($delete);
+            $delete->delete();
+            return back()->with('success', 'Deleted Successfully');
+        } else {
+            return back()->with('error', 'Somethin went wrong');
+        }
     }
 
     public function StaffsOnLeave()

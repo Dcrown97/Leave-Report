@@ -74,6 +74,136 @@
                             </form>
                         </div>
                     </div>
+                     <table  class="table table-striped table-bordered table-hover table-checkable order-column valign-middle"
+                                                    id="example4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th> Name </th>
+                                                            <th> Days </th>
+                                                            <th> Created </th>
+                                                            
+                                                            <th class="center"> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="result"></tbody>
+                                                    <tbody id="old">
+                                                        @if (isset($leave_types) && count($leave_types) > 0)
+                                                            @foreach ($leave_types as $record)
+                                                                <tr class="odd gradeX">
+                                                                    <td class="patient-img">
+                                                                         {{ $leave_types->firstItem() + $loop->index }}
+                                                                    </td>
+                                                                    <td>{{ $record->leave_type?? '' }}
+                                                                    </td>
+                                                                    <td class="center">{{ $record->num_of_days }}</td>
+                                                                    <td>{{ $record->created_at->format('Y-m-d') }}</td>
+                                                                   
+                                                                    <td class="center">
+                                                                        <div class="profile-userbuttons">
+                                                                           
+                                                                          <a href="/edit/{{ base64_encode($record->id) }}"
+                                                                                id="exampleModal{{ $record->id }}"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#exampleModal{{ $record->id }}"
+                                                                                class="btn btn-primary btn-lg"> <i class="fa-solid fa-edit"></i> 
+                                                                                Edit</a>
+                                                                            <a onclick="return confirm('Are you sure ?')"
+                                                                                href="/delete_leave_type/{{ base64_encode($record->id) }}"
+                                                                                class="btn btn-circle deepPink-bgcolor btn-sm">Delete
+                                                                                </a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--Edit Modal -->
+                                                                <div class="modal fade"
+                                                                    id="exampleModal{{ $record->id }}" tabindex="-1"
+                                                                    aria-labelledby="exampleModalLabel"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">Edit
+                                                                                 {{ $record->leave_type }}</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <!-- Sign up form -->
+                                                                                <section class="signup">
+                                                                                    <div class="container">
+                                                                                        <div class="signup-content">
+
+                                                                                            <div class="signup-form">
+                                                                                                <h3 class="form-title">
+                                                                                                    Edit</h3>
+                                                                                                @include('flash.flash')
+                                                                                                <form
+                                                                                                    action="/edit_leave_type/{{ base64_encode($record->id) }}"
+                                                                                                    method="POST"
+                                                                                                    class="register-form"
+                                                                                                    id="register-form">
+                                                                                                    @csrf
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <div
+                                                                                                            class="">
+                                                                                                            <input
+                                                                                                                name="name"
+                                                                                                               
+                                                                                                                type="text"
+                                                                                                                {{ $record->leave_type == 'Casual' || $record->leave_type == 'Annual'|| $record->leave_type == 'Maternity' ? 'readonly' : '' }}
+                                                                                                                value="{{ $record->leave_type }}"
+                                                                                                                placeholder="name"
+                                                                                                                class="form-control input-height" />
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <div
+                                                                                                            class="">
+                                                                                                            <input
+                                                                                                                name="days"
+                                                                                                                type="text"
+                                                                                                                placeholder=""
+                                                                                                                value="{{$record->num_of_days}}"
+                                                                                                                class="form-control input-height" />
+                                                                                                        </div>
+                                                                                                    </div>                       
+
+                                                                                                    <div
+                                                                                                        class="form-group form-button">
+                                                                                                        <button
+                                                                                                            class="btn btn-round btn-primary btn-lg"
+                                                                                                            type="submit"
+                                                                                                            id="register">Edit</button>
+                                                                                                    </div>
+                                                                                                </form>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {{-- End of Edit modal --}}
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                     {{ $leave_types->links('vendor.pagination.bootstrap-4') }}
+
                 </div>
             </div>
         </div>
