@@ -196,7 +196,7 @@ class LeavereportController extends Controller
             foreach ($remaining_days as $remaining_day) {
                 $total_days += $remaining_day->num_of_days;
             }
-            // dd($total_days);
+            
             if ($request->leave_type_id == 1 || $request->leave_type_id == 2) {
                 //check if total days is less than or equal to 30
                 if ($total_days <= 30) {
